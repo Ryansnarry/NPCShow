@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>曲红绡NPC效果验证方案</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #b76e79;
             --secondary: #e6b0aa;
-            --dark: #5d4037;
+            --dark: #1a0a13;
             --light: #f9f2f4;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --accent: #ff2a6d;
+            --accent2: #05d9e8;
+            --card-bg: rgba(30, 15, 24, 0.85);
+            --glass: rgba(255, 255, 255, 0.05);
+            --shadow: 0 10px 40px rgba(183, 110, 121, 0.15);
+            --neon-shadow: 0 0 10px var(--accent), 0 0 20px rgba(255, 42, 109, 0.5);
         }
 
         * {
@@ -22,30 +27,75 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c1e2a 0%, #1a1018 100%);
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f0a1d 0%, #1f0e1c 100%);
             color: #f0e6f0;
             line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
             overflow-x: hidden;
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* 装饰元素 */
+        .decor {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .decor.circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            top: 10%;
+            right: 5%;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .decor.triangle {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 260px solid var(--accent2);
+            bottom: -100px;
+            left: -50px;
+            transform: rotate(45deg);
+            animation: rotate 25s infinite linear;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
         }
 
+        /* 头部区域 */
         .header-section {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 30px;
             margin-bottom: 40px;
-            background: rgba(45, 30, 40, 0.8);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            border-radius: 20px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(183, 110, 121, 0.3);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
         }
 
         .header-section::before {
@@ -54,27 +104,43 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            z-index: 1;
+        }
+
+        .header-section::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
             z-index: 1;
         }
 
         h1 {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 700;
             margin-bottom: 15px;
-            color: #f8d7e9;
+            color: #fff;
             position: relative;
             z-index: 2;
-            text-shadow: 0 2px 10px rgba(183, 110, 121, 0.5);
+            text-shadow: var(--neon-shadow);
+            font-family: 'ZCOOL XiaoWei', serif;
+            letter-spacing: 2px;
         }
 
         .subtitle {
-            font-size: 1.3rem;
-            color: #e6b0aa;
-            margin: 0 auto 25px;
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin: 0 auto 30px;
             font-weight: 400;
             max-width: 800px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .designer-info {
@@ -87,15 +153,28 @@
 
         .designer-card {
             background: rgba(69, 40, 60, 0.7);
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1rem;
-            border: 1px solid var(--primary);
+            font-size: 1.1rem;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 15px rgba(255, 42, 109, 0.3);
+            transition: all 0.3s ease;
         }
 
+        .designer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .designer-card i {
+            color: var(--accent2);
+            font-size: 1.2rem;
+        }
+
+        /* 视频预览区域 */
         .video-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -110,141 +189,267 @@
         }
 
         .video-container {
-            background: rgba(35, 25, 35, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
             border: 1px solid rgba(183, 110, 121, 0.3);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: #f8d7e9;
-            margin-bottom: 20px;
+            color: #fff;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 2px;
         }
 
         .section-title i {
-            color: var(--primary);
+            color: var(--accent2);
+            font-size: 1.8rem;
         }
 
         .video-preview {
-            background: linear-gradient(135deg, #3a2635 0%, #2a1828 100%);
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(58, 38, 53, 0.8) 0%, rgba(42, 24, 40, 0.9) 100%);
+            border-radius: 15px;
             height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
-            margin-bottom: 20px;
-            border: 2px solid var(--primary);
+            margin-bottom: 25px;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 20px rgba(255, 42, 109, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .video-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px var(--accent);
         }
 
         .play-button {
-            width: 80px;
-            height: 80px;
-            background: rgba(183, 110, 121, 0.7);
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 42, 109, 0.2);
+            border: 2px solid var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 2;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 42, 109, 0.3);
+        }
+
+        .play-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            opacity: 0.3;
+            z-index: -1;
         }
 
         .play-button:hover {
             transform: scale(1.1);
-            background: rgba(183, 110, 121, 0.9);
+            background: rgba(255, 42, 109, 0.4);
+            box-shadow: 0 0 30px var(--accent);
         }
 
         .video-description {
-            color: #e6b0aa;
+            color: #d7bde2;
             line-height: 1.7;
             font-size: 1.1rem;
         }
 
+        .video-description ul {
+            padding-left: 25px;
+            margin-top: 15px;
+        }
+
+        .video-description li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .video-description li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent2);
+        }
+
+        /* 分镜脚本 */
         .script-container {
-            background: rgba(35, 25, 35, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
             border: 1px solid rgba(183, 110, 121, 0.3);
-            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .script-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
         }
 
         .script-section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(45, 25, 40, 0.6);
+            border: 1px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .script-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 42, 109, 0.2);
         }
 
         .script-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary);
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent2);
         }
 
         .script-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            color: #f8d7e9;
+            color: #fff;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .script-content {
-            background: rgba(45, 30, 45, 0.6);
-            border-radius: 10px;
-            padding: 20px;
             line-height: 1.8;
+            padding: 10px;
         }
 
         .dialogue {
-            margin: 15px 0;
-            padding: 15px;
-            border-left: 3px solid var(--primary);
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 3px solid var(--accent);
             background: rgba(69, 40, 60, 0.5);
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dialogue::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--accent2));
         }
 
         .character {
             font-weight: 600;
-            color: #f5b7b1;
-            margin-bottom: 5px;
+            color: var(--accent2);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .character::before {
+            content: "▶";
+            color: var(--accent);
         }
 
         .action {
             font-style: italic;
             color: #d7bde2;
-            margin: 10px 0;
-            padding-left: 15px;
+            margin: 15px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .action::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
         }
 
         .timeline {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 40px;
             padding: 0 20px;
+            flex-wrap: wrap;
         }
 
         .timeline-item {
             text-align: center;
             flex: 1;
+            position: relative;
+            z-index: 2;
+            min-width: 120px;
+            margin-bottom: 20px;
         }
 
         .timeline-dot {
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
+            width: 25px;
+            height: 25px;
+            background: var(--accent);
             border-radius: 50%;
-            margin: 0 auto 10px;
+            margin: 0 auto 15px;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--accent);
+            transition: all 0.3s ease;
         }
 
         .timeline-dot::after {
@@ -252,9 +457,15 @@
             position: absolute;
             top: 50%;
             left: 100%;
-            width: calc(100% - 20px);
+            width: calc(100% - 25px);
             height: 2px;
-            background: var(--primary);
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            z-index: -1;
+        }
+
+        .timeline-dot i {
+            font-size: 0.8rem;
+            color: white;
         }
 
         .timeline-item:last-child .timeline-dot::after {
@@ -262,44 +473,94 @@
         }
 
         .timeline-label {
-            font-size: 0.9rem;
-            color: #e6b0aa;
+            font-size: 1rem;
+            color: var(--secondary);
+            background: rgba(45, 25, 40, 0.7);
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid var(--accent);
+        }
+
+        /* AI表演增强 */
+        .ai-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(183, 110, 121, 0.3);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
         }
 
         .ai-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            gap: 30px;
             margin-top: 40px;
         }
 
         .feature-card {
-            background: rgba(45, 30, 40, 0.8);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(183, 110, 121, 0.3);
-            transition: all 0.3s ease;
+            background: rgba(45, 25, 40, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--accent);
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 15px 35px rgba(255, 42, 109, 0.25);
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,42,109,0.1), rgba(5,217,232,0.1));
+            z-index: -1;
         }
 
         .feature-title {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #f8d7e9;
-            margin-bottom: 15px;
+            color: #fff;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .feature-title i {
-            color: var(--primary);
-            font-size: 1.5rem;
+            color: var(--accent2);
+            font-size: 1.8rem;
+            background: rgba(5, 217, 232, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--accent2);
         }
 
         .feature-content {
@@ -307,34 +568,161 @@
             line-height: 1.7;
         }
 
+        .feature-content ul {
+            padding-left: 25px;
+            margin-top: 15px;
+        }
+
+        .feature-content li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .feature-content li::before {
+            content: "◈";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
         footer {
             text-align: center;
-            padding: 40px 0;
-            color: #e6b0aa;
-            font-size: 1.05rem;
+            padding: 50px 0;
+            color: var(--secondary);
+            font-size: 1.1rem;
             margin-top: 50px;
             border-top: 1px solid rgba(183, 110, 121, 0.3);
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.15;
+            }
+            100% {
+                transform: scale(1.1);
+                opacity: 0.25;
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(45deg);
+            }
+            100% {
+                transform: rotate(405deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .video-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .timeline-dot::after {
+                display: none;
+            }
+            
+            .script-container, .ai-container {
+                padding: 20px;
+            }
+            
+            .designer-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+        
+        /* 新增动画效果 */
+        .fade-in {
+            animation: fadeInUp 0.8s forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.3s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.5s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.7s;
+        }
+        
+        .delay-4 {
+            animation-delay: 0.9s;
+        }
+        
+        .delay-5 {
+            animation-delay: 1.1s;
         }
     </style>
 </head>
 <body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 装饰元素 -->
+    <div class="decor circle"></div>
+    <div class="decor triangle"></div>
+    
     <div class="container">
         <!-- 头部区域 -->
-        <section class="header-section">
-            <h1>曲红绡NPC效果验证方案</h1>
-            <p class="subtitle">1分钟视频验证再见阶段互动场景 - 危险调笑、化解误会与合作邀约</p>
+        <section class="header-section fade-in">
+            <h1>曲红绡·NPC效果验证</h1>
+            <p class="subtitle">危险调笑·真心思索·合作邀约 - 60秒情感张力验证</p>
             
             <div class="designer-info">
                 <div class="designer-card">
-                    <i class="fas fa-user"></i>
-                    <span>策划：NPC情感设计组</span>
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>策划：郭慧杰（Sevy）</span>
                 </div>
                 <div class="designer-card">
-                    <i class="fas fa-calendar"></i>
-                    <span>版本：1.0</span>
+                    <i class="fas fa-calendar-star"></i>
+                    <span>版本：血影1.0</span>
                 </div>
                 <div class="designer-card">
-                    <i class="fas fa-video"></i>
+                    <i class="fas fa-hourglass-half"></i>
                     <span>时长：60秒</span>
                 </div>
             </div>
@@ -342,10 +730,10 @@
 
         <!-- 视频预览区域 -->
         <section class="video-section">
-            <div class="video-container">
+            <div class="video-container fade-in delay-1">
                 <h2 class="section-title">
                     <i class="fas fa-play-circle"></i>
-                    视频预览
+                    月下血影·视频预览
                 </h2>
                 <div class="video-preview">
                     <div class="play-button">
@@ -356,26 +744,34 @@
                 </div>
                 <div class="video-description">
                     <p>本视频将展示再见阶段的核心互动场景：玩家调查尸体时，曲红绡突然出现并用骨剑抵住玩家脖颈，通过危险调笑建立紧张氛围，随后化解误会并抛出合作邀请。</p>
-                    <p>重点表现曲红绡的性感挑逗与真心思索的双重特质，验证NPC的表演张力和情感深度。</p>
+                    <ul>
+                        <li>簌簌光影下的角色登场</li>
+                        <li>骨剑抵颈的压迫感与性感特写</li>
+                        <li>真心思索时的微表情变化</li>
+                        <li>合作邀约时的语气变换</li>
+                        <li>噬灵体探究时的氛围转变</li>
+                    </ul>
                 </div>
             </div>
             
-            <div class="video-container">
+            <div class="video-container fade-in delay-2">
                 <h2 class="section-title">
                     <i class="fas fa-bullseye"></i>
-                    设计目标
+                    设计目标·核心验证
                 </h2>
                 <div class="video-description">
-                    <ul style="padding-left: 20px; margin-top: 15px;">
+                    <ul>
                         <li>验证曲红绡角色魅力的视觉表现力</li>
                         <li>展示危险与性感并存的核心特质</li>
                         <li>测试AI动态表演的流畅度和情感表达</li>
                         <li>验证剧情转折的情感冲击力</li>
-                        <li>评估玩家与NPC的情感连接强度</li>
                     </ul>
                     
-                    <div style="margin-top: 25px; background: rgba(183,110,121,0.1); padding: 15px; border-radius: 8px;">
-                        <h3 style="color: #f8d7e9; margin-bottom: 10px;">关键情感表达</h3>
+                    <div style="margin-top: 25px; padding: 20px; border-radius: 15px; background: rgba(255,42,109,0.1); border: 1px solid var(--accent);">
+                        <h3 style="color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-heart-circle-bolt"></i>
+                            <span>关键情感表达</span>
+                        </h3>
                         <p>从威胁调笑 → 真心思索 → 合作邀请的情感转变，展现角色复杂性和深度。</p>
                     </div>
                 </div>
@@ -383,219 +779,272 @@
         </section>
 
         <!-- 分镜脚本 -->
-        <section class="script-container">
+        <section class="script-container fade-in delay-3">
             <h2 class="section-title">
                 <i class="fas fa-film"></i>
-                分镜脚本设计
+                分镜脚本·月下叙事
             </h2>
             
             <div class="script-section">
                 <div class="script-header">
-                    <i class="fas fa-camera" style="color: var(--primary);"></i>
-                    <h3 class="script-title">场景1：尸体调查 (0-15秒)</h3>
+                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
+                    <h3 class="script-title">场景1：血月尸影 (0-15秒)</h3>
                 </div>
                 <div class="script-content">
-                    <div class="action">【深夜，荒郊野外，月光微弱】玩家蹲在三具精血被抽干的尸体旁调查</div>
-                    <div class="action">镜头特写：尸体旁的血色丝绢和骨粉痕迹</div>
-                    <div class="action">环境音效：风声、虫鸣，营造紧张氛围</div>
+                    <div class="action">【血月当空，宗内荒地，簌簌鸦声笼罩】玩家蹲在三具面目全非的尸体旁调查</div>
+                    <div class="action">镜头特写：尸体旁的血色丝绢飘动，骨粉痕迹散发微光</div>
+                    <div class="action">环境音效：低频震动音效 + 诡异风声</div>
+                    <div class="action">光影效果：血月红光与地面蓝光形成冷暖对比</div>
                 </div>
             </div>
             
             <div class="script-section">
                 <div class="script-header">
-                    <i class="fas fa-camera" style="color: var(--primary);"></i>
-                    <h3 class="script-title">场景2：危险登场 (15-25秒)</h3>
+                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
+                    <h3 class="script-title">场景2：骨剑迤逦 (15-25秒)</h3>
                 </div>
                 <div class="script-content">
-                    <div class="action">【突然，骨剑抵住玩家脖颈】曲红绡从阴影中出现</div>
+                    <div class="action">【突然，勾引的光效闪现，骨剑抵住玩家脖颈】曲红绡从暗中浮现</div>
                     <div class="dialogue">
                         <div class="character">曲红绡</div>
                         <div>"小弟弟，深夜探案，不怕被灭口吗？"</div>
                     </div>
-                    <div class="action">镜头特写：红唇微勾，眼神狡黠中带着危险</div>
-                    <div class="action">动作细节：骨剑轻轻划过玩家颈部皮肤</div>
+                    <div class="action">镜头特写：红唇微勾，霓虹光线在面部流动，眼神狡黠危险</div>
+                    <div class="action">动作细节：骨剑边缘散发光效，有血色流转</div>
                 </div>
             </div>
             
             <div class="script-section">
                 <div class="script-header">
-                    <i class="fas fa-camera" style="color: var(--primary);"></i>
-                    <h3 class="script-title">场景3：化解误会 (25-40秒)</h3>
+                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
+                    <h3 class="script-title">场景3：戏谑之间 (25-40秒)</h3>
                 </div>
                 <div class="script-content">
                     <div class="dialogue">
                         <div class="character">玩家</div>
-                        <div>"这些人死状，和你有关？"</div>
+                        <div>"这些人死状，和你有关。"</div>
                     </div>
-                    <div class="action">曲红绡轻笑收回骨剑，优雅转身</div>
+                    <div class="action">曲红绡轻笑收回骨剑，优雅逗弄地从怀中取出令牌</div>
                     <div class="dialogue">
                         <div class="character">曲红绡</div>
-                        <div>"若是我做的，你此刻已和他们一样了～"</div>
+                        <div>"算你聪明，看到这令牌了吗？元洪长老争抢的【噬灵体秘术】残卷，就在我手里——正道长老又如何？长生路上哪有无辜……"</div>
                     </div>
-                    <div class="action">微表情变化：危险→戏谑→思索</div>
+                    <div class="action">微表情变化：提到元洪长老时嘴角露出不屑的弧度，保持轻笑</div>
                 </div>
             </div>
             
             <div class="script-section">
                 <div class="script-header">
-                    <i class="fas fa-camera" style="color: var(--primary);"></i>
-                    <h3 class="script-title">场景4：合作邀约 (40-55秒)</h3>
+                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
+                    <h3 class="script-title">场景4：秘卷邀约 (40-55秒)</h3>
                 </div>
                 <div class="script-content">
-                    <div class="action">曲红绡取出【噬灵体秘术】残卷令牌</div>
+                    <div class="action">曲红绡把玩令牌，眼神深思片刻</div>
                     <div class="dialogue">
                         <div class="character">曲红绡</div>
-                        <div>"帮我打探《水芸心经》线索，这残卷就是你的，如何？"</div>
+                        <div>"只要你帮我打探到镇门功法《水芸心经》的线索，《水芸心经》就有你一份。"</div>
+                        <div>"放心，我不杀你，如何？"</div>
                     </div>
-                    <div class="action">镜头特写：眼神中闪烁算计与机会</div>
+                    <div class="action">镜头特写：眼神中流光闪烁，展现精明的交易意图</div>
                 </div>
             </div>
             
             <div class="script-section">
                 <div class="script-header">
-                    <i class="fas fa-camera" style="color: var(--primary);"></i>
-                    <h3 class="script-title">场景5：噬灵体回应 (55-60秒)</h3>
+                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
+                    <h3 class="script-title">场景5：试探真言 (55-60秒)</h3>
                 </div>
                 <div class="script-content">
                     <div class="dialogue">
                         <div class="character">玩家</div>
                         <div>"噬灵体？"</div>
                     </div>
+                    <div class="action">曲红绡眼神瞬间收缩，随后转为玩味，突然贴近玩家耳边</div>
                     <div class="dialogue">
                         <div class="character">曲红绡</div>
-                        <div>"（贴近耳边低语）那些道貌岸然的老东西，杀人时可比这狠多了..."</div>
+                        <div>"知道太多，可是会被灭口的哦～不过……(压低声音)你以为这功法残卷是怎么来的？那些老东西杀人的时候，可比我狠多了。"</div>
                     </div>
-                    <div class="action">结尾定格：曲红绡复杂表情特写 - 轻蔑中带着痛楚</div>
+                    <div class="action">结尾定格：面部光影分裂为红蓝两色，展现矛盾情感</div>
                 </div>
             </div>
             
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-label">调查尸体</div>
+                    <div class="timeline-dot"><i class="fas fa-search"></i></div>
+                    <div class="timeline-label">血月尸影</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-label">骨剑威胁</div>
+                    <div class="timeline-dot"><i class="fas fa-skull"></i></div>
+                    <div class="timeline-label">骨剑迤逦</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-label">化解误会</div>
+                    <div class="timeline-dot"><i class="fas fa-comments"></i></div>
+                    <div class="timeline-label">戏谑之间</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-label">合作邀请</div>
+                    <div class="timeline-dot"><i class="fas fa-handshake"></i></div>
+                    <div class="timeline-label">秘卷邀约</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-label">噬灵体回应</div>
+                    <div class="timeline-dot"><i class="fas fa-dragon"></i></div>
+                    <div class="timeline-label">试探真言</div>
                 </div>
             </div>
         </section>
         
         <!-- AI表演增强 -->
-        <section class="script-container">
+        <section class="ai-container fade-in delay-4">
             <h2 class="section-title">
                 <i class="fas fa-robot"></i>
-                AI表演增强设计
+                AI幻影·表演增强
             </h2>
             
             <div class="ai-features">
                 <div class="feature-card">
                     <h3 class="feature-title">
-                        <i class="fas fa-eye"></i>
-                        眼神变化系统
-                    </h3>
-                    <div class="feature-content">
-                        <p>基于对话内容实时生成眼神变化：</p>
-                        <ul style="padding-left: 20px; margin-top: 10px;">
-                            <li>威胁时的锐利眼神</li>
-                            <li>调笑时的媚眼如丝</li>
-                            <li>沉思时的深邃目光</li>
-                            <li>回忆痛楚时的瞬间暗淡</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <h3 class="feature-title">
                         <i class="fas fa-microphone-alt"></i>
-                        语音情感引擎
+                        情感语音合成
                     </h3>
                     <div class="feature-content">
-                        <p>动态调整语音的语调、节奏和情感：</p>
-                        <ul style="padding-left: 20px; margin-top: 10px;">
-                            <li>危险调笑的轻佻语气</li>
-                            <li>化解误会时的戏谑音调</li>
-                            <li>提出合作时的诱惑低语</li>
-                            <li>揭露真相时的压抑愤怒</li>
+                        <p>基于技术实验的实时语音合成：</p>
+                        <ul>
+                            <li>威胁台词：提高音调+轻微气声，增强压迫感</li>
+                            <li>耳语台词：降低音量+近距离混响效果</li>
+                            <li>仇恨台词：加入轻微颤音和齿音增强</li>
+                            <li>轻佻台词：语速微调+尾音上扬处理</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="feature-card">
                     <h3 class="feature-title">
-                        <i class="fas fa-running"></i>
-                        肢体语言生成
+                        <i class="fas fa-smile-wink"></i>
+                        微表情控制
                     </h3>
                     <div class="feature-content">
-                        <p>根据情境生成自然肢体动作：</p>
-                        <ul style="padding-left: 20px; margin-top: 10px;">
-                            <li>骨剑抵颈时的压迫性前倾</li>
-                            <li>收回武器时的优雅转身</li>
-                            <li>思考时的指尖轻点下巴</li>
-                            <li>揭露真相时的紧握拳头</li>
+                        <p>基于面部动作编码系统的精准控制：</p>
+                        <ul>
+                            <li>讥讽表情：单侧嘴角提升+眉梢微挑</li>
+                            <li>算计表情：眼睑微眯+虹膜聚焦变化</li>
+                            <li>仇恨表情：下颌紧绷+鼻翼微张</li>
+                            <li>轻佻表情：眨眼频率提升+头部微倾</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="feature-card">
                     <h3 class="feature-title">
-                        <i class="fas fa-theater-masks"></i>
-                        微表情系统
+                        <i class="fas fa-people-arrows"></i>
+                        智能镜头距离感知
                     </h3>
                     <div class="feature-content">
-                        <p>捕捉复杂情感的面部微表情：</p>
-                        <ul style="padding-left: 20px; margin-top: 10px;">
-                            <li>嘴角的讥讽微扬</li>
-                            <li>眉间的瞬间紧蹙</li>
-                            <li>眼神闪烁的算计</li>
-                            <li>回忆痛苦时的下颌紧绷</li>
+                        <p>动态调整NPC与玩家的空间关系：</p>
+                        <ul>
+                            <li>威胁阶段：近距离压迫</li>
+                            <li>谈判阶段：舒适社交距离</li>
+                            <li>耳语阶段：亲密距离+倾斜角度</li>
+                            <li>警惕阶段：突然拉远距离+防御姿态</li>
                         </ul>
                     </div>
-                </div>
+                </div> 
             </div>
         </section>
 
-        <footer>
-            <p>曲红绡NPC效果验证方案 | 情感交互设计 | © 2023 游戏体验设计中心</p>
+        <footer class="fade-in delay-5">
+            <p>曲红绡NPC效果验证方案 | NPC分线 | © 2025 郭慧杰（Sevy）</p>
         </footer>
     </div>
 
+    <!-- 粒子系统 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // 视频预览交互
-        document.querySelector('.play-button').addEventListener('click', function() {
-            const button = this;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            button.style.backgroundColor = 'rgba(183, 110, 121, 0.9)';
+        // 粒子背景初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            if(typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: "#ff2a6d" },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.3, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: "#05d9e8",
+                            opacity: 0.1,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 1,
+                            direction: "none",
+                            random: true,
+                            straight: false,
+                            out_mode: "out",
+                            bounce: false
+                        }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: {
+                            onhover: { enable: true, mode: "repulse" },
+                            onclick: { enable: true, mode: "push" },
+                            resize: true
+                        }
+                    }
+                });
+            }
             
-            setTimeout(() => {
-                button.innerHTML = '<i class="fas fa-play"></i>';
-                button.style.backgroundColor = 'rgba(183, 110, 121, 0.7)';
-                
-                // 模拟视频播放效果
-                const preview = document.querySelector('.video-preview');
-                preview.innerHTML = `
-                    <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(58,38,53,0.8) 0%, rgba(42,24,40,0.9) 100%); display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                        <div style="font-size: 1.5rem; color: #f8d7e9; margin-bottom: 20px;">
-                            <i class="fas fa-play-circle"></i> 视频播放中...
-                        </div>
-                        <div style="width: 80%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px;">
-                            <div style="width: 70%; height: 100%; background: var(--primary); border-radius: 2px;"></div>
-                        </div>
-                    </div>
-                `;
-            }, 1500);
+            // 视频预览交互
+            const playButton = document.querySelector('.play-button');
+            if(playButton) {
+                playButton.addEventListener('click', function() {
+                    const button = this;
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    button.style.backgroundColor = 'rgba(255, 42, 109, 0.4)';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-play"></i>';
+                        button.style.backgroundColor = 'rgba(255, 42, 109, 0.2)';
+                        
+                        // 模拟视频播放效果
+                        const preview = document.querySelector('.video-preview');
+                        preview.innerHTML = `
+                            <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(58,38,53,0.9) 0%, rgba(42,24,40,0.95) 100%); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                                <div style="font-size: 1.8rem; color: #f8d7e9; margin-bottom: 25px; text-align: center;">
+                                    <i class="fas fa-play-circle"></i> 曲红绡·NPC演示
+                                </div>
+                                <div style="width: 80%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; margin-bottom: 20px;">
+                                    <div style="width: 70%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px;"></div>
+                                </div>
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent2); overflow: hidden;">
+                                        <div style="width: 100%; height: 100%; background: url('https://i.pravatar.cc/150?img=12') center/cover;"></div>
+                                    </div>
+                                    <div>
+                                        <div style="color: var(--accent2); font-weight: 600;">曲红绡</div>
+                                        <div style="color: #d7bde2; font-size: 0.9rem;">邪修·血罗刹</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }, 1500);
+                });
+            }
+            
+            // 添加滚动动画效果
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
         });
     </script>
 </body>
