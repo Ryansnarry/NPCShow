@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>曲红绡NPC效果验证方案 - 交互式分镜</title>
+    <title>曲红绡·分线体验 - NPC效果验证</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #8a6d9e;
@@ -15,12 +15,13 @@
             --light: #f9f5fd;
             --accent: #9c6db5;
             --accent2: #d4a5ed;
-            --card-bg: rgba(255, 255, 255, 0.92);
-            --glass: rgba(255, 255, 255, 0.1);
-            --shadow: 0 5px 20px rgba(138, 109, 158, 0.15);
-            --neon-shadow: 0 0 5px rgba(156, 109, 181, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --paper-bg: #f7f2e9;
+            --paper-border: #d9c7a8;
+            --ink: #3a2a2a;
             --blood-red: #8a0303;
-            --moonlight: #e2d5f0;
+            --success: #5d8c7e;
+            --warning: #d4a96a;
         }
 
         * {
@@ -30,10 +31,10 @@
         }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #f8f4ff 0%, #eae2f8 100%);
-            color: #4a3a5a;
-            line-height: 1.6;
+            font-family: 'ZCOOL XiaoWei', serif;
+            background: linear-gradient(135deg, #e6d8c3 0%, #d8c9b0 100%), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23d9c7a8" opacity="0.1"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23b8a68a" stroke-width="0.5" opacity="0.2"/></svg>');
+            color: var(--ink);
+            line-height: 1.8;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -54,9 +55,10 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
+            height: 6px;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             z-index: 1;
+            box-shadow: 0 0 10px rgba(156, 109, 181, 0.5);
         }
 
         /* 头部区域 */
@@ -65,12 +67,19 @@
             padding: 60px 30px 40px;
             margin: 30px 0 40px;
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(138, 109, 158, 0.2);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(2px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15);
+            backdrop-filter: blur(4px);
+            transition: all 0.4s ease;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M20,20 Q40,5 60,20 T100,20 M20,50 Q40,35 60,50 T100,50 M20,80 Q40,65 60,80 T100,80" stroke="%23c9b6d8" stroke-width="0.3" fill="none"/></svg>');
+        }
+
+        .header-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15), 0 10px 30px rgba(138, 109, 158, 0.2);
         }
 
         .header-section::after {
@@ -80,29 +89,32 @@
             left: 50%;
             transform: translateX(-50%);
             width: 200px;
-            height: 1px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
         h1 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 2.8rem;
-            font-weight: 600;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3.5rem;
+            font-weight: 400;
             margin-bottom: 15px;
-            color: var(--dark);
+            color: var(--darker);
             position: relative;
             z-index: 2;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .subtitle {
-            font-size: 1.3rem;
-            color: var(--primary);
+            font-size: 1.5rem;
+            color: var(--blood-red);
             margin: 0 auto 30px;
             font-weight: 400;
             max-width: 800px;
             font-family: 'Noto Serif SC', serif;
             font-style: italic;
+            padding: 0 20px;
+            letter-spacing: 1px;
         }
 
         .designer-info {
@@ -120,48 +132,247 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             border: 1px solid rgba(138, 109, 158, 0.2);
             box-shadow: 0 2px 10px rgba(138, 109, 158, 0.1);
             transition: all 0.3s ease;
             color: var(--primary);
+            font-family: 'Noto Serif SC', serif;
         }
 
         .designer-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(138, 109, 158, 0.2);
             border-color: var(--accent);
+            color: var(--darker);
         }
 
         .designer-card i {
             color: var(--accent);
-            font-size: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* 小说栏位 */
+        .novel-section {
+            background: var(--paper-bg);
+            border: 2px solid var(--paper-border);
+            border-radius: 8px;
+            padding: 40px;
+            margin: 50px 0;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f7f2e9" opacity="0.8"/><path d="M0,20 L100,20 M0,40 L100,40 M0,60 L100,60 M0,80 L100,80" stroke="%23d9c7a8" stroke-width="1" opacity="0.3"/></svg>');
+        }
+
+        .novel-section::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 60px;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 Q70,30 50,50 Q30,70 50,90" fill="none" stroke="%238a6d9e" stroke-width="2" opacity="0.2"/></svg>');
+            opacity: 0.2;
+        }
+
+        .novel-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--paper-border);
+            position: relative;
+        }
+
+        .novel-header h2 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.8rem;
+            color: var(--darker);
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .novel-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .novel-intro {
+            background: rgba(201, 182, 216, 0.15);
+            border-left: 4px solid var(--accent);
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .novel-intro h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.6rem;
+            color: var(--blood-red);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .novel-intro h3 i {
+            color: var(--blood-red);
+        }
+
+        .novel-intro ul {
+            padding-left: 30px;
+            margin-top: 15px;
+        }
+
+        .novel-intro li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+
+        .novel-intro li::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .novel-content {
+            font-size: 1.2rem;
+            line-height: 2.0;
+            color: var(--ink);
+            text-align: justify;
+            column-count: 2;
+            column-gap: 40px;
+            text-indent: 2em;
+        }
+
+        .novel-content p {
+            margin-bottom: 1.5em;
+            text-align: justify;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+        }
+
+        .novel-content .first-letter {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.8;
+            margin-right: 8px;
+            color: var(--blood-red);
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .novel-content .highlight {
+            background: linear-gradient(transparent 60%, rgba(156, 109, 181, 0.2) 40%);
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .novel-content .dialogue {
+            font-family: 'Noto Serif SC', serif;
+            margin: 25px 0;
+            padding-left: 40px;
+            position: relative;
+            color: var(--darker);
+        }
+
+        .novel-content .dialogue::before {
+            content: "“";
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            font-size: 4rem;
+            color: var(--accent2);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .novel-content .dialogue .character {
+            font-weight: 700;
+            color: var(--blood-red);
+            margin-bottom: 5px;
+        }
+
+        .novel-content .poem {
+            font-family: 'Noto Serif SC', serif;
+            text-align: center;
+            margin: 30px auto;
+            padding: 25px;
+            max-width: 80%;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            border: 1px solid var(--paper-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            font-style: italic;
+            column-span: all;
+        }
+
+        .novel-content .poem p {
+            margin-bottom: 15px;
+            line-height: 2.0;
+        }
+
+        .chapter-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 40px 0 30px;
+            color: var(--darker);
+            letter-spacing: 3px;
+            column-span: all;
+            position: relative;
+        }
+
+        .chapter-title::before, .chapter-title::after {
+            content: "✧";
+            margin: 0 15px;
+            color: var(--accent);
+            opacity: 0.7;
         }
 
         /* 视频预览区域 */
         .video-section {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
         }
 
         .video-container {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 30px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(138, 109, 158, 0.2);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(2px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15);
+            backdrop-filter: blur(4px);
+            transition: all 0.4s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15), 0 10px 30px rgba(138, 109, 158, 0.2);
         }
 
         .section-title {
             font-family: 'Noto Serif SC', serif;
             font-size: 1.8rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--darker);
             margin-bottom: 25px;
             display: flex;
             align-items: center;
@@ -176,7 +387,7 @@
             bottom: 0;
             left: 0;
             width: 60px;
-            height: 2px;
+            height: 3px;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             border-radius: 2px;
         }
@@ -188,8 +399,8 @@
 
         .video-preview {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 240, 255, 0.9) 100%);
-            border-radius: 10px;
-            height: 300px;
+            border-radius: 12px;
+            height: 280px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -202,28 +413,41 @@
             transition: all 0.4s ease;
         }
 
+        .video-preview:hover {
+            box-shadow: 0 8px 25px rgba(138, 109, 158, 0.2);
+        }
+
         .video-placeholder {
             text-align: center;
             padding: 30px;
+            max-width: 400px;
         }
 
         .video-placeholder i {
-            font-size: 3.5rem;
-            color: var(--secondary);
+            font-size: 4rem;
+            color: var(--accent);
             margin-bottom: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .video-placeholder:hover i {
+            transform: scale(1.1);
+            color: var(--darker);
+            text-shadow: 0 0 10px rgba(156, 109, 181, 0.5);
         }
 
         .video-placeholder h3 {
             font-family: 'Noto Serif SC', serif;
-            color: var(--primary);
-            font-size: 1.5rem;
+            color: var(--darker);
+            font-size: 1.6rem;
             margin-bottom: 15px;
         }
 
         .video-placeholder p {
-            color: var(--primary);
+            color: var(--dark);
             max-width: 400px;
             line-height: 1.6;
+            font-size: 1.1rem;
         }
 
         .video-description {
@@ -249,20 +473,57 @@
             position: absolute;
             left: 0;
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
 
-        /* 分镜脚本 */
+        .key-emotion {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(156, 109, 181, 0.08);
+            border: 1px solid rgba(138, 109, 158, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .key-emotion:hover {
+            background: rgba(156, 109, 181, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .key-emotion h3 {
+            color: var(--darker);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+
+        .key-emotion h3 i {
+            color: var(--accent);
+        }
+
+        .key-emotion p {
+            color: var(--dark);
+        }
+
+        /* 分镜脚本 - 交互式导航 */
         .script-container {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 40px;
             margin-bottom: 50px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(138, 109, 158, 0.2);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(2px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15);
+            backdrop-filter: blur(4px);
+            transition: all 0.4s ease;
+        }
+
+        .script-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15), 0 10px 30px rgba(138, 109, 158, 0.2);
         }
 
         .script-container::before {
@@ -275,15 +536,21 @@
             background: linear-gradient(90deg, var(--accent), var(--accent2));
         }
         
-        /* 图标导航栏 */
+        /* 图标导航栏 - 固定在左侧 */
         .icon-nav {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 40px;
+            flex-direction: column;
+            gap: 15px;
             padding: 15px;
             background: rgba(201, 182, 216, 0.15);
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid rgba(138, 109, 158, 0.2);
+            box-shadow: 0 2px 10px rgba(138, 109, 158, 0.1);
+            z-index: 100;
         }
         
         .nav-item {
@@ -292,41 +559,57 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 10px 15px;
-            border-radius: 10px;
-            flex: 1;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
+            position: relative;
         }
         
         .nav-item:hover {
-            background: rgba(156, 109, 181, 0.1);
+            background: rgba(156, 109, 181, 0.15);
             transform: translateY(-5px);
         }
         
         .nav-item.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            box-shadow: 0 5px 15px rgba(156, 109, 181, 0.3);
+        }
+        
+        .nav-item.active::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
             background: var(--accent);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
         }
         
         .nav-item.active .nav-icon {
             color: white;
             background: var(--darker);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
         
         .nav-item.active .nav-label {
-            color: var(--darker);
+            color: white;
             font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         
         .nav-icon {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 10px;
-            font-size: 24px;
+            font-size: 28px;
             color: var(--accent);
             border: 2px solid var(--accent);
             transition: all 0.3s ease;
@@ -334,159 +617,183 @@
         
         .nav-label {
             color: var(--dark);
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 500;
         }
 
-        .script-section {
-            margin-bottom: 30px;
-            padding: 25px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(138, 109, 158, 0.15);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .script-section:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.1);
-            border-color: rgba(138, 109, 158, 0.3);
-        }
-
-        .script-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+        .scene {
+            margin-bottom: 35px;
             border-bottom: 1px solid var(--secondary);
+            padding-bottom: 20px;
+            transition: all 0.3s ease;
         }
-
-        .script-title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark);
+        
+        .scene:last-child {
+            border-bottom: none;
         }
-
-        .script-content {
-            line-height: 1.8;
-            padding: 10px;
-            color: var(--dark);
-        }
-
-        .dialogue {
-            margin: 20px 0;
-            padding: 20px;
-            border-left: 2px solid var(--accent);
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 0 10px 10px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .character {
+        
+        .scene-title {
             font-weight: 600;
             color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(201, 182, 216, 0.1);
+            border-radius: 8px;
+        }
+        
+        .scene-icon {
+            background: var(--accent);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .shot {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 3px 10px rgba(138, 109, 158, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .shot:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(138, 109, 158, 0.2);
+        }
+        
+        .shot-header {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--secondary);
+        }
+        
+        .shot-number {
+            font-weight: 700;
+            color: var(--accent);
             font-size: 1.1rem;
+        }
+        
+        .shot-time {
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(201, 182, 216, 0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        
+        .shot-detail {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .shot-label {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+            padding-top: 4px;
+        }
+        
+        .shot-value {
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* 重点优化：台词显示区域 */
+        .dialogue-content {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(201, 182, 216, 0.08);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent2);
+            grid-column: 1 / -1; /* 跨越整个宽度 */
+            transition: all 0.3s ease;
+        }
+        
+        .dialogue-content:hover {
+            background: rgba(201, 182, 216, 0.12);
+            transform: translateY(-3px);
+        }
+        
+        .dialogue-character {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
-        .character::before {
+        
+        .dialogue-character::before {
             content: "❯";
             color: var(--accent);
+            font-size: 1.4rem;
         }
-
-        .action {
-            font-style: italic;
-            color: var(--primary);
-            margin: 15px 0;
+        
+        .dialogue-text {
+            color: var(--darker);
+            margin: 12px 0;
             padding-left: 20px;
+            font-size: 1.1rem;
+            line-height: 1.7;
             position: relative;
         }
-
-        .action::before {
-            content: "—";
+        
+        .dialogue-text::before {
+            content: "“";
             position: absolute;
             left: 0;
-            color: var(--accent);
+            top: -5px;
+            color: var(--accent2);
+            font-size: 2rem;
+            font-family: serif;
         }
-
-        .timeline {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding: 0 20px;
-            flex-wrap: wrap;
-        }
-
-        .timeline-item {
-            text-align: center;
-            flex: 1;
-            position: relative;
-            z-index: 2;
-            min-width: 120px;
-            margin-bottom: 20px;
-        }
-
-        .timeline-dot {
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-dot::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            width: calc(100% - 20px);
-            height: 1px;
-            background: linear-gradient(to right, var(--accent), var(--accent2));
-            z-index: -1;
-        }
-
-        .timeline-dot i {
-            font-size: 0.7rem;
-            color: white;
-        }
-
-        .timeline-item:last-child .timeline-dot::after {
-            display: none;
-        }
-
-        .timeline-label {
-            font-size: 0.95rem;
+        
+        .dialogue-action {
+            font-style: italic;
             color: var(--primary);
-            padding: 5px 10px;
-            border-radius: 30px;
-            display: inline-block;
-            border: 1px solid var(--secondary);
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: rgba(138, 109, 158, 0.05);
+            border-left: 2px solid var(--accent2);
+            border-radius: 6px;
+            font-size: 1rem;
         }
 
         /* AI表演增强 */
         .ai-container {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 40px;
             margin-bottom: 50px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(138, 109, 158, 0.2);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(2px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15);
+            backdrop-filter: blur(4px);
+            transition: all 0.4s ease;
+        }
+
+        .ai-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.15), 0 10px 30px rgba(138, 109, 158, 0.2);
         }
 
         .ai-container::before {
@@ -508,41 +815,50 @@
 
         .feature-card {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 30px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(138, 109, 158, 0.15);
+            box-shadow: 0 3px 10px rgba(138, 109, 158, 0.1);
             transition: all 0.4s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(138, 109, 158, 0.15);
-            border-color: rgba(138, 109, 158, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(138, 109, 158, 0.2);
+            border-color: var(--accent);
         }
 
         .feature-title {
             font-family: 'Noto Serif SC', serif;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--darker);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--secondary);
         }
 
         .feature-title i {
             color: var(--accent);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(156, 109, 181, 0.1);
+            border-radius: 50%;
         }
 
         .feature-content {
             color: var(--dark);
             line-height: 1.7;
+            font-size: 1.1rem;
         }
 
         .feature-content ul {
@@ -553,7 +869,7 @@
         .feature-content li {
             margin-bottom: 12px;
             position: relative;
-            padding-left: 25px;
+            padding-left: 30px;
             color: var(--dark);
         }
 
@@ -562,7 +878,7 @@
             position: absolute;
             left: 10px;
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.8rem;
         }
 
         footer {
@@ -603,154 +919,12 @@
             100% { transform: scale(1); }
         }
         
-        .scene {
-            margin-bottom: 25px;
-            border-bottom: 1px solid var(--secondary);
-            padding-bottom: 15px;
-        }
-        
-        .scene-title {
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .scene-icon {
-            background: var(--accent);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
-        .shot {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(201, 182, 216, 0.1);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .shot-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        
-        .shot-number {
-            font-weight: 600;
-            color: var(--accent);
-        }
-        
-        .shot-time {
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-        
-        .shot-detail {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .shot-label {
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .shot-value {
-            color: var(--dark);
-        }
-        
-        .dialogue-content {
-            margin-top: 10px;
-            padding-left: 15px;
-            border-left: 2px solid var(--accent2);
-        }
-        
-        .dialogue-character {
-            font-weight: 600;
-            color: var(--accent);
-        }
-        
-        .dialogue-text {
-            color: var(--dark);
-            margin: 5px 0;
-        }
-        
-        .dialogue-action {
-            font-style: italic;
-            color: var(--primary);
-            margin-top: 5px;
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(156, 109, 181, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(156, 109, 181, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(156, 109, 181, 0); }
         }
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .video-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .timeline {
-                flex-direction: column;
-                gap: 30px;
-            }
-            
-            .timeline-dot::after {
-                display: none;
-            }
-            
-            .script-container, .ai-container {
-                padding: 20px;
-            }
-            
-            .designer-info {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .ai-features {
-                grid-template-columns: 1fr;
-            }
-            
-            .shot-detail {
-                grid-template-columns: 1fr;
-            }
-            
-            .icon-nav {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-item {
-                flex-direction: row;
-                justify-content: flex-start;
-                text-align: left;
-                gap: 15px;
-            }
-            
-            .nav-icon {
-                margin-bottom: 0;
-            }
-        }
-        
-        /* 新增动画效果 */
         .fade-in {
             animation: fadeInUp 0.8s forwards;
             opacity: 0;
@@ -780,6 +954,10 @@
             animation: pulse 1.5s infinite;
         }
         
+        .highlight {
+            animation: highlight 1.5s ease;
+        }
+        
         /* 装饰元素 */
         .floating-icon {
             position: absolute;
@@ -807,9 +985,123 @@
             left: 8%;
             transform: rotate(20deg);
         }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            width: 0%;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .video-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .icon-nav {
+                flex-direction: row;
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .novel-content {
+                column-count: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .script-container, .ai-container {
+                padding: 25px;
+            }
+            
+            .designer-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .ai-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .shot-detail {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .shot-label {
+                margin-top: 10px;
+                font-size: 1.05rem;
+            }
+            
+            .icon-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-item {
+                flex-direction: row;
+                justify-content: flex-start;
+                text-align: left;
+                gap: 15px;
+            }
+            
+            .nav-icon {
+                margin-bottom: 0;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .nav-item.active::after {
+                display: none;
+            }
+            
+            .feature-title {
+                font-size: 1.3rem;
+            }
+            
+            .dialogue-content {
+                padding: 15px;
+            }
+            
+            .dialogue-text {
+                padding-left: 15px;
+                font-size: 1.05rem;
+            }
+            
+            .novel-section {
+                padding: 20px;
+            }
+            
+            .novel-header h2 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="progress-bar" id="progressBar"></div>
     <div class="decor-line"></div>
     
     <!-- 装饰图标 -->
@@ -823,26 +1115,121 @@
         <i class="fas fa-feather"></i>
     </div>
     
+    <!-- 左侧悬浮导航 -->
+    <div class="icon-nav" id="sceneNav">
+        <div class="nav-item active" data-target="scene1">
+            <div class="nav-icon">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="nav-label">血月尸影</div>
+        </div>
+        <div class="nav-item" data-target="scene2">
+            <div class="nav-icon">
+                <i class="fas fa-skull"></i>
+            </div>
+            <div class="nav-label">骨剑迤逦</div>
+        </div>
+        <div class="nav-item" data-target="scene3">
+            <div class="nav-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="nav-label">戏谑之间</div>
+        </div>
+        <div class="nav-item" data-target="scene4">
+            <div class="nav-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <div class="nav-label">秘卷邀约</div>
+        </div>
+        <div class="nav-item" data-target="scene5">
+            <div class="nav-icon">
+                <i class="fas fa-dragon"></i>
+            </div>
+            <div class="nav-label">试探真言</div>
+        </div>
+    </div>
+    
     <div class="container">
         <!-- 头部区域 -->
         <section class="header-section fade-in">
-            <h1>曲红绡·NPC效果验证</h1>
-            <p class="subtitle">危险调笑·真心思索·合作邀约 - 60秒情感张力验证</p>
+            <h1 style="font-family: 'Arial', sans-serif;">曲红绡·设计验证</h1>
+            <p class="subtitle">60S展示曲红绡的情绪张力</p>
+        </section>
+        
+        <!-- 新增小说栏位 -->
+        <section class="novel-section fade-in">
+            <div class="novel-header">
+                <h2>分线片段·再见·月下血影</h2>
+                <p>邪修正道两相疑，骨剑红绡诉恩仇</p>
+            </div>
             
-            <div class="designer-info">
-                <div class="designer-card">
-                    <i class="fas fa-user"></i>
-                    <span>角色设计：郭慧杰（Sevy）</span>
+            <div class="novel-intro">
+                <h3><i class="fas fa-book-open"></i> 本视频将展示再见阶段的核心互动场景</h3>
+                <p>玩家调查尸体时，曲红绡突然出现并用骨剑抵住玩家脖颈，通过危险调笑建立紧张氛围，随后化解误会并抛出合作邀请。</p>
+                <ul>
+                    <li>血月光影下的角色登场</li>
+                    <li>骨剑抵颈的压迫感与性感特写</li>
+                    <li>仇恨台词时的面部微表情变化</li>
+                    <li>亲密距离时的语气变换</li>
+                    <li>噬灵体探究时的氛围转变</li>
+                </ul>
+            </div>
+            
+            <div class="novel-content">
+                <p><span class="first-letter">血</span>月当空，鸦啼寒林。三具尸身横陈荒野，精血尽失，如枯木败絮。夜风呜咽，卷起几片残破的丝绢，其上暗红血渍已凝成紫黑。一青年玩家俯身探查，指尖触及尸骸颈间骨粉痕迹时，忽见幽光微闪。</p>
+                
+                <p>阴风骤起，枯叶盘旋如鬼魅起舞。玩家警觉按剑，却觉喉间一凉——</p>
+                
+                <div class="dialogue">
+                    <div class="character">曲红绡</div>
+                    <p>"小道士，猜猜他们怎么死的？"</p>
                 </div>
-                <div class="designer-card">
-                    <i class="fas fa-calendar"></i>
-                    <span>2025年6月24日</span>
+                
+                <p>一柄森白骨剑自暗影中探出，剑尖轻点青年喉结。执剑女子自夜色中现形，红裳如血，青丝如瀑，面纱半掩下唇角微勾，似笑非笑。剑身纹理如活物搏动，泛着妖异血光。</p>
+                
+                <div class="chapter-title">第一回 骨剑惊魂</div>
+                
+                <p>玩家瞳孔骤缩，倒映出骨剑寒芒。</p>
+
+                <p>那唤作曲红绡的女子欺身近前，吐气如兰："深夜探尸，不怕步他们后尘？"</p>
+
+                <p>骨剑顺势下滑，在青年颈间划出浅痕，血珠沁出，染红剑锋。</p>
+                
+                <div class="dialogue">
+                    <div class="character">玩家</div>
+                    <p>"杀人者，从不会炫耀凶器。"</p>
                 </div>
-                <div class="designer-card">
-                    <i class="fas fa-film"></i>
-                    <span>交互式分镜版</span>
+                
+                <p>指弹剑刃，铮然作响。曲红绡挑眉轻笑，骨剑倏忽化作令牌在指尖飞旋："算你聪明。"令牌翻转间，"噬灵体"三字篆文在血月下森然可见，边缘尚滴落新鲜血珠。</p>
+                
+                <div class="chapter-title">第二回 秘卷疑云</div>
+                
+                <p>曲红绡眸中血色翻涌："元洪老道为这残卷...<span class="highlight">屠我全族</span>！"令牌破空掷向玩家，"帮我取《水芸心经》，此卷归你。"</p>
+                
+                <p>"如不愿..."，二人鼻息相闻时，她突然贴近耳畔："你也想尝尝被追杀的滋味？"温热气流转作凛冽杀意，发丝拂过青年面颊如毒蛇吐信。</p>
+                
+                <div class="dialogue">
+                    <div class="character">玩家</div>
+                    <p>"人不是你杀的，我也不是。"</p>
+                </div>
+                
+                <p>四目相对间，玩家忽问："你和噬灵体有何关系？"话音未落，曲红绡眼中光影骤变，骨剑再现却颤悬颈侧，剑鸣轻颤。</p>
+                
+                <div class="chapter-title">第三回 红绡遁影</div>
+                
+                <p>血雾爆散，唯余轻笑绕耳："下次多嘴时..."一方丝绢飘落遮住玩家双眼，香息残留处，余音袅袅："记得选个没尸体的地方~"</p>
+                
+                <p>荒野复归死寂，血月西沉。玩家攥紧冰冷令牌，拂去丝绢，查看其上"噬灵体"三字如活物搏动。</p>
+                <p>远处传来更鼓声，寅时将至，而一场搅动正邪两道的风暴，方才拉开序幕...</p>
+                
+                <div class="poem" style="text-align: center;">
+                    <p>红绡敛月夜，骨剑映寒星</p>
+                    <p>仇深难自抑，情劫灼无心</p>
+                    <p>正邪本无界，长生原是刑</p>
+                    <p>谁解罗刹泪，孤鸿渡幽冥</p>
                 </div>
             </div>
+            
         </section>
 
         <!-- 视频预览区域 -->
@@ -854,24 +1241,14 @@
                 </h2>
                 <div class="video-preview">
                     <div class="video-placeholder">
-                        <i class="fas fa-video-slash"></i>
+                        <i class="fas fa-video pulse"></i>
                         <h3>视频待补充，尚未录制</h3>
                         <p>本区域将展示曲红绡NPC的核心互动场景，视频内容正在制作中</p>
                     </div>
                 </div>
-                <div class="video-description">
-                    <p>本视频将展示再见阶段的核心互动场景：玩家调查尸体时，曲红绡突然出现并用骨剑抵住玩家脖颈，通过危险调笑建立紧张氛围，随后化解误会并抛出合作邀请。</p>
-                    <ul>
-                        <li>血月光影下的角色登场</li>
-                        <li>骨剑抵颈的压迫感与性感特写</li>
-                        <li>仇恨台词时的面部微表情变化</li>
-                        <li>亲密距离时的语气变换</li>
-                        <li>噬灵体探究时的氛围转变</li>
-                    </ul>
-                </div>
             </div>
             
-            <div class="video-container fade-in delay-2">
+            <div class="video-container fade-in delay-1">
                 <h2 class="section-title">
                     <i class="fas fa-bullseye"></i>
                     设计目标·核心验证
@@ -885,10 +1262,10 @@
                         <li>评估玩家在紧张情境下的情感反应</li>
                     </ul>
                     
-                    <div style="margin-top: 25px; padding: 20px; border-radius: 10px; background: rgba(156, 109, 181, 0.05); border: 1px solid rgba(138, 109, 158, 0.2);">
-                        <h3 style="color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                    <div class="key-emotion">
+                        <h3>
                             <i class="fas fa-heart-circle-bolt"></i>
-                            <span>关键情感表达</span>
+                            关键情感表达
                         </h3>
                         <p>从威胁调笑 → 真心思索 → 合作邀请的情感转变，展现角色复杂性和深度。</p>
                     </div>
@@ -896,46 +1273,12 @@
             </div>
         </section>
 
-        <!-- 分镜脚本 - 交互式导航 -->
-        <section class="script-container fade-in delay-3">
+        <!-- 分镜脚本 -->
+        <section class="script-container fade-in delay-2">
             <h2 class="section-title">
                 <i class="fas fa-film"></i>
                 分镜脚本·月下叙事（交互式）
             </h2>
-            
-            <!-- 图标导航栏 -->
-            <div class="icon-nav" id="sceneNav">
-                <div class="nav-item active" data-target="scene1">
-                    <div class="nav-icon">
-                        <i class="fas fa-moon"></i>
-                    </div>
-                    <div class="nav-label">血月尸影</div>
-                </div>
-                <div class="nav-item" data-target="scene2">
-                    <div class="nav-icon">
-                        <i class="fas fa-skull"></i>
-                    </div>
-                    <div class="nav-label">骨剑迤逦</div>
-                </div>
-                <div class="nav-item" data-target="scene3">
-                    <div class="nav-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <div class="nav-label">戏谑之间</div>
-                </div>
-                <div class="nav-item" data-target="scene4">
-                    <div class="nav-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <div class="nav-label">秘卷邀约</div>
-                </div>
-                <div class="nav-item" data-target="scene5">
-                    <div class="nav-icon">
-                        <i class="fas fa-dragon"></i>
-                    </div>
-                    <div class="nav-label">试探真言</div>
-                </div>
-            </div>
             
             <div class="scene" id="scene1">
                 <div class="scene-title">
@@ -971,7 +1314,7 @@
                         <div class="shot-label">景别：</div>
                         <div class="shot-value">特写→中景</div>
                         <div class="shot-label">画面：</div>
-                        <div class="shot-value">玩家已走进，手指触碰丝绢瞬间，骨粉痕迹突然发光</div>
+                        <div class="shot-value">玩家已走近，手指触碰丝绢瞬间，骨粉痕迹突然发光</div>
                         <div class="shot-label">运镜：</div>
                         <div class="shot-value">推镜头至骨粉微光，快速拉远展现玩家警觉起身</div>
                         <div class="shot-label">音效：</div>
@@ -1331,7 +1674,7 @@
         </section>
         
         <!-- AI表演增强 -->
-        <section class="ai-container fade-in delay-4">
+        <section class="ai-container fade-in delay-3">
             <h2 class="section-title">
                 <i class="fas fa-robot"></i>
                 AI幻影·表演增强
@@ -1388,7 +1731,7 @@
             </div>
         </section>
 
-        <footer class="fade-in delay-5">
+        <footer class="fade-in delay-4">
             <p>曲红绡NPC效果验证方案 | NPC分线 | © 2025 郭慧杰（Sevy）</p>
         </footer>
     </div>
@@ -1470,16 +1813,36 @@
                 // 高亮当前场景
                 const currentScene = document.getElementById(sceneId);
                 if (currentScene) {
-                    currentScene.style.border = '2px solid ' + getComputedStyle(document.documentElement).getPropertyValue('--accent');
-                    currentScene.style.boxShadow = '0 0 15px rgba(156, 109, 181, 0.3)';
+                    currentScene.classList.add('highlight');
                     
                     // 5秒后移除高亮
                     setTimeout(() => {
-                        currentScene.style.border = 'none';
-                        currentScene.style.boxShadow = 'none';
+                        currentScene.classList.remove('highlight');
                     }, 5000);
                 }
             }
+            
+            // 进度条
+            const progressBar = document.getElementById('progressBar');
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.body.scrollHeight - window.innerHeight;
+                const progress = (window.scrollY / totalHeight) * 100;
+                progressBar.style.width = `${progress}%`;
+            });
+            
+            // 悬停动画
+            const cards = document.querySelectorAll('.video-container, .script-container, .ai-container, .feature-card, .shot, .novel-section');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px)';
+                    card.style.boxShadow = '0 15px 30px rgba(138, 109, 158, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                });
+            });
         });
     </script>
 </body>
