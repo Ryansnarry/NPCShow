@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>曲红绡NPC效果验证方案</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #b76e79;
-            --secondary: #e6b0aa;
-            --dark: #1a0a13;
-            --light: #f9f2f4;
-            --accent: #ff2a6d;
-            --accent2: #05d9e8;
-            --card-bg: rgba(30, 15, 24, 0.85);
-            --glass: rgba(255, 255, 255, 0.05);
-            --shadow: 0 10px 40px rgba(183, 110, 121, 0.15);
-            --neon-shadow: 0 0 10px var(--accent), 0 0 20px rgba(255, 42, 109, 0.5);
+            --primary: #8a6d9e;
+            --secondary: #c9b6d8;
+            --dark: #2a1a3a;
+            --darker: #1d1129;
+            --light: #f9f5fd;
+            --accent: #9c6db5;
+            --accent2: #d4a5ed;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --glass: rgba(255, 255, 255, 0.1);
+            --shadow: 0 5px 20px rgba(138, 109, 158, 0.15);
+            --neon-shadow: 0 0 5px rgba(156, 109, 181, 0.3);
+            --blood-red: #8a0303;
+            --moonlight: #e2d5f0;
         }
 
         * {
@@ -28,52 +31,13 @@
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #0f0a1d 0%, #1f0e1c 100%);
-            color: #f0e6f0;
+            background: linear-gradient(135deg, #f8f4ff 0%, #eae2f8 100%);
+            color: #4a3a5a;
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
             padding-bottom: 40px;
-        }
-
-        /* 粒子背景 */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        /* 装饰元素 */
-        .decor {
-            position: absolute;
-            z-index: -1;
-            opacity: 0.15;
-        }
-
-        .decor.circle {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            top: 10%;
-            right: 5%;
-            animation: pulse 8s infinite alternate;
-        }
-
-        .decor.triangle {
-            width: 0;
-            height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-bottom: 260px solid var(--accent2);
-            bottom: -100px;
-            left: -50px;
-            transform: rotate(45deg);
-            animation: rotate 25s infinite linear;
         }
 
         .container {
@@ -84,63 +48,61 @@
             z-index: 10;
         }
 
-        /* 头部区域 */
-        .header-section {
-            text-align: center;
-            padding: 60px 30px;
-            margin-bottom: 40px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(183, 110, 121, 0.3);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-        }
-
-        .header-section::before {
-            content: "";
+        /* 装饰线条 */
+        .decor-line {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
+            width: 100%;
             height: 4px;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             z-index: 1;
+        }
+
+        /* 头部区域 */
+        .header-section {
+            text-align: center;
+            padding: 60px 30px 40px;
+            margin: 30px 0 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(138, 109, 158, 0.2);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(2px);
         }
 
         .header-section::after {
             content: "";
             position: absolute;
             bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent2), var(--accent));
-            z-index: 1;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
         h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
             margin-bottom: 15px;
-            color: #fff;
+            color: var(--dark);
             position: relative;
             z-index: 2;
-            text-shadow: var(--neon-shadow);
-            font-family: 'ZCOOL XiaoWei', serif;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .subtitle {
-            font-size: 1.4rem;
-            color: var(--secondary);
+            font-size: 1.3rem;
+            color: var(--primary);
             margin: 0 auto 30px;
             font-weight: 400;
             max-width: 800px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Noto Serif SC', serif;
+            font-style: italic;
         }
 
         .designer-info {
@@ -152,57 +114,54 @@
         }
 
         .designer-card {
-            background: rgba(69, 40, 60, 0.7);
-            padding: 15px 25px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.1rem;
-            border: 1px solid var(--accent);
-            box-shadow: 0 0 15px rgba(255, 42, 109, 0.3);
+            font-size: 1rem;
+            border: 1px solid rgba(138, 109, 158, 0.2);
+            box-shadow: 0 2px 10px rgba(138, 109, 158, 0.1);
             transition: all 0.3s ease;
+            color: var(--primary);
         }
 
         .designer-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(138, 109, 158, 0.2);
+            border-color: var(--accent);
         }
 
         .designer-card i {
-            color: var(--accent2);
-            font-size: 1.2rem;
+            color: var(--accent);
+            font-size: 1rem;
         }
 
         /* 视频预览区域 */
         .video-section {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 30px;
             margin-bottom: 50px;
         }
 
-        @media (max-width: 900px) {
-            .video-section {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .video-container {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 30px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(183, 110, 121, 0.3);
+            border: 1px solid rgba(138, 109, 158, 0.2);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
         }
 
         .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fff;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark);
             margin-bottom: 25px;
             display: flex;
             align-items: center;
@@ -216,76 +175,59 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100px;
-            height: 3px;
+            width: 60px;
+            height: 2px;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             border-radius: 2px;
         }
 
         .section-title i {
-            color: var(--accent2);
-            font-size: 1.8rem;
+            color: var(--accent);
+            font-size: 1.5rem;
         }
 
         .video-preview {
-            background: linear-gradient(135deg, rgba(58, 38, 53, 0.8) 0%, rgba(42, 24, 40, 0.9) 100%);
-            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 240, 255, 0.9) 100%);
+            border-radius: 10px;
             height: 300px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
             margin-bottom: 25px;
-            border: 1px solid var(--accent);
-            box-shadow: 0 0 20px rgba(255, 42, 109, 0.2);
+            border: 1px solid rgba(138, 109, 158, 0.2);
+            box-shadow: 0 5px 15px rgba(138, 109, 158, 0.1);
             transition: all 0.4s ease;
         }
 
-        .video-preview:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px var(--accent);
+        .video-placeholder {
+            text-align: center;
+            padding: 30px;
         }
 
-        .play-button {
-            width: 90px;
-            height: 90px;
-            background: rgba(255, 42, 109, 0.2);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 2;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 42, 109, 0.3);
+        .video-placeholder i {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
         }
 
-        .play-button::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--accent), var(--accent2));
-            opacity: 0.3;
-            z-index: -1;
+        .video-placeholder h3 {
+            font-family: 'Noto Serif SC', serif;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
         }
 
-        .play-button:hover {
-            transform: scale(1.1);
-            background: rgba(255, 42, 109, 0.4);
-            box-shadow: 0 0 30px var(--accent);
+        .video-placeholder p {
+            color: var(--primary);
+            max-width: 400px;
+            line-height: 1.6;
         }
 
         .video-description {
-            color: #d7bde2;
+            color: var(--dark);
             line-height: 1.7;
             font-size: 1.1rem;
         }
@@ -299,26 +241,28 @@
             margin-bottom: 10px;
             position: relative;
             padding-left: 20px;
+            color: var(--dark);
         }
 
         .video-description li::before {
-            content: "✦";
+            content: "•";
             position: absolute;
             left: 0;
-            color: var(--accent2);
+            color: var(--accent);
+            font-size: 1.2rem;
         }
 
         /* 分镜脚本 */
         .script-container {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 40px;
             margin-bottom: 50px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(183, 110, 121, 0.3);
+            border: 1px solid rgba(138, 109, 158, 0.2);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
         }
 
         .script-container::before {
@@ -332,19 +276,20 @@
         }
 
         .script-section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             padding: 25px;
-            border-radius: 15px;
-            background: rgba(45, 25, 40, 0.6);
-            border: 1px solid var(--accent);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(138, 109, 158, 0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease;
         }
 
         .script-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 42, 109, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(138, 109, 158, 0.1);
+            border-color: rgba(138, 109, 158, 0.3);
         }
 
         .script-header {
@@ -353,72 +298,60 @@
             gap: 15px;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid var(--accent2);
+            border-bottom: 1px solid var(--secondary);
         }
 
         .script-title {
-            font-size: 1.6rem;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #fff;
-            background: linear-gradient(90deg, var(--accent2), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark);
         }
 
         .script-content {
             line-height: 1.8;
             padding: 10px;
+            color: var(--dark);
         }
 
         .dialogue {
             margin: 20px 0;
             padding: 20px;
-            border-left: 3px solid var(--accent);
-            background: rgba(69, 40, 60, 0.5);
-            border-radius: 0 15px 15px 0;
+            border-left: 2px solid var(--accent);
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 0 10px 10px 0;
             position: relative;
             overflow: hidden;
         }
 
-        .dialogue::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--accent), var(--accent2));
-        }
-
         .character {
             font-weight: 600;
-            color: var(--accent2);
+            color: var(--accent);
             margin-bottom: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .character::before {
-            content: "▶";
+            content: "❯";
             color: var(--accent);
         }
 
         .action {
             font-style: italic;
-            color: #d7bde2;
+            color: var(--primary);
             margin: 15px 0;
             padding-left: 20px;
             position: relative;
         }
 
         .action::before {
-            content: "•";
+            content: "—";
             position: absolute;
             left: 0;
             color: var(--accent);
-            font-size: 1.5rem;
         }
 
         .timeline {
@@ -439,8 +372,8 @@
         }
 
         .timeline-dot {
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             background: var(--accent);
             border-radius: 50%;
             margin: 0 auto 15px;
@@ -448,7 +381,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px var(--accent);
             transition: all 0.3s ease;
         }
 
@@ -457,14 +389,14 @@
             position: absolute;
             top: 50%;
             left: 100%;
-            width: calc(100% - 25px);
-            height: 2px;
+            width: calc(100% - 20px);
+            height: 1px;
             background: linear-gradient(to right, var(--accent), var(--accent2));
             z-index: -1;
         }
 
         .timeline-dot i {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: white;
         }
 
@@ -473,26 +405,25 @@
         }
 
         .timeline-label {
-            font-size: 1rem;
-            color: var(--secondary);
-            background: rgba(45, 25, 40, 0.7);
+            font-size: 0.95rem;
+            color: var(--primary);
             padding: 5px 10px;
-            border-radius: 8px;
+            border-radius: 30px;
             display: inline-block;
-            border: 1px solid var(--accent);
+            border: 1px solid var(--secondary);
         }
 
         /* AI表演增强 */
         .ai-container {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 40px;
             margin-bottom: 50px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(183, 110, 121, 0.3);
+            border: 1px solid rgba(138, 109, 158, 0.2);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
         }
 
         .ai-container::before {
@@ -513,58 +444,41 @@
         }
 
         .feature-card {
-            background: rgba(45, 25, 40, 0.6);
-            border-radius: 15px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 25px;
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--accent);
+            border: 1px solid rgba(138, 109, 158, 0.15);
             transition: all 0.4s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 15px 35px rgba(255, 42, 109, 0.25);
-        }
-
-        .feature-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255,42,109,0.1), rgba(5,217,232,0.1));
-            z-index: -1;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(138, 109, 158, 0.15);
+            border-color: rgba(138, 109, 158, 0.3);
         }
 
         .feature-title {
-            font-size: 1.5rem;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.4rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--dark);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--secondary);
         }
 
         .feature-title i {
-            color: var(--accent2);
-            font-size: 1.8rem;
-            background: rgba(5, 217, 232, 0.1);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--accent2);
+            color: var(--accent);
+            font-size: 1.6rem;
         }
 
         .feature-content {
-            color: #d7bde2;
+            color: var(--dark);
             line-height: 1.7;
         }
 
@@ -577,22 +491,23 @@
             margin-bottom: 12px;
             position: relative;
             padding-left: 25px;
+            color: var(--dark);
         }
 
         .feature-content li::before {
-            content: "◈";
+            content: "•";
             position: absolute;
-            left: 0;
+            left: 10px;
             color: var(--accent);
+            font-size: 1.2rem;
         }
 
         footer {
             text-align: center;
             padding: 50px 0;
-            color: var(--secondary);
+            color: var(--primary);
             font-size: 1.1rem;
             margin-top: 50px;
-            border-top: 1px solid rgba(183, 110, 121, 0.3);
             position: relative;
         }
 
@@ -603,8 +518,8 @@
             left: 50%;
             transform: translateX(-50%);
             width: 200px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
         /* 动画 */
@@ -619,33 +534,13 @@
             }
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.15;
-            }
-            100% {
-                transform: scale(1.1);
-                opacity: 0.25;
-            }
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(45deg);
-            }
-            100% {
-                transform: rotate(405deg);
-            }
-        }
-
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
             }
             
             .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             .video-section {
@@ -670,11 +565,16 @@
                 align-items: center;
                 gap: 15px;
             }
+            
+            .ai-features {
+                grid-template-columns: 1fr;
+            }
         }
         
         /* 新增动画效果 */
         .fade-in {
             animation: fadeInUp 0.8s forwards;
+            opacity: 0;
         }
         
         .delay-1 {
@@ -696,15 +596,49 @@
         .delay-5 {
             animation-delay: 1.1s;
         }
+        
+        /* 装饰元素 */
+        .floating-icon {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.05;
+            color: var(--accent);
+            font-size: 8rem;
+            pointer-events: none;
+        }
+        
+        .icon-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(15deg);
+        }
+        
+        .icon-2 {
+            top: 25%;
+            right: 7%;
+            transform: rotate(-10deg);
+        }
+        
+        .icon-3 {
+            bottom: 15%;
+            left: 8%;
+            transform: rotate(20deg);
+        }
     </style>
 </head>
 <body>
-    <!-- 粒子背景 -->
-    <div id="particles-js"></div>
+    <div class="decor-line"></div>
     
-    <!-- 装饰元素 -->
-    <div class="decor circle"></div>
-    <div class="decor triangle"></div>
+    <!-- 装饰图标 -->
+    <div class="floating-icon icon-1">
+        <i class="fas fa-moon"></i>
+    </div>
+    <div class="floating-icon icon-2">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="floating-icon icon-3">
+        <i class="fas fa-feather"></i>
+    </div>
     
     <div class="container">
         <!-- 头部区域 -->
@@ -736,11 +670,11 @@
                     月下血影·视频预览
                 </h2>
                 <div class="video-preview">
-                    <div class="play-button">
-                        <i class="fas fa-play"></i>
+                    <div class="video-placeholder">
+                        <i class="fas fa-video-slash"></i>
+                        <h3>视频待补充，尚未录制</h3>
+                        <p>本区域将展示曲红绡NPC的核心互动场景，视频内容正在制作中</p>
                     </div>
-                    <!-- 视频背景效果 -->
-                    <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(183,110,121,0.1) 0%, rgba(90,60,80,0.3) 100%);"></div>
                 </div>
                 <div class="video-description">
                     <p>本视频将展示再见阶段的核心互动场景：玩家调查尸体时，曲红绡突然出现并用骨剑抵住玩家脖颈，通过危险调笑建立紧张氛围，随后化解误会并抛出合作邀请。</p>
@@ -767,8 +701,8 @@
                         <li>验证剧情转折的情感冲击力</li>
                     </ul>
                     
-                    <div style="margin-top: 25px; padding: 20px; border-radius: 15px; background: rgba(255,42,109,0.1); border: 1px solid var(--accent);">
-                        <h3 style="color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                    <div style="margin-top: 25px; padding: 20px; border-radius: 10px; background: rgba(156, 109, 181, 0.05); border: 1px solid rgba(138, 109, 158, 0.2);">
+                        <h3 style="color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-heart-circle-bolt"></i>
                             <span>关键情感表达</span>
                         </h3>
@@ -955,84 +889,8 @@
         </footer>
     </div>
 
-    <!-- 粒子系统 -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // 粒子背景初始化
         document.addEventListener('DOMContentLoaded', function() {
-            if(typeof particlesJS !== 'undefined') {
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { value: 80, density: { enable: true, value_area: 800 } },
-                        color: { value: "#ff2a6d" },
-                        shape: { type: "circle" },
-                        opacity: { value: 0.3, random: true },
-                        size: { value: 3, random: true },
-                        line_linked: {
-                            enable: true,
-                            distance: 150,
-                            color: "#05d9e8",
-                            opacity: 0.1,
-                            width: 1
-                        },
-                        move: {
-                            enable: true,
-                            speed: 1,
-                            direction: "none",
-                            random: true,
-                            straight: false,
-                            out_mode: "out",
-                            bounce: false
-                        }
-                    },
-                    interactivity: {
-                        detect_on: "canvas",
-                        events: {
-                            onhover: { enable: true, mode: "repulse" },
-                            onclick: { enable: true, mode: "push" },
-                            resize: true
-                        }
-                    }
-                });
-            }
-            
-            // 视频预览交互
-            const playButton = document.querySelector('.play-button');
-            if(playButton) {
-                playButton.addEventListener('click', function() {
-                    const button = this;
-                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                    button.style.backgroundColor = 'rgba(255, 42, 109, 0.4)';
-                    
-                    setTimeout(() => {
-                        button.innerHTML = '<i class="fas fa-play"></i>';
-                        button.style.backgroundColor = 'rgba(255, 42, 109, 0.2)';
-                        
-                        // 模拟视频播放效果
-                        const preview = document.querySelector('.video-preview');
-                        preview.innerHTML = `
-                            <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(58,38,53,0.9) 0%, rgba(42,24,40,0.95) 100%); display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                <div style="font-size: 1.8rem; color: #f8d7e9; margin-bottom: 25px; text-align: center;">
-                                    <i class="fas fa-play-circle"></i> 曲红绡·NPC演示
-                                </div>
-                                <div style="width: 80%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; margin-bottom: 20px;">
-                                    <div style="width: 70%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px;"></div>
-                                </div>
-                                <div style="display: flex; gap: 15px;">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent2); overflow: hidden;">
-                                        <div style="width: 100%; height: 100%; background: url('https://i.pravatar.cc/150?img=12') center/cover;"></div>
-                                    </div>
-                                    <div>
-                                        <div style="color: var(--accent2); font-weight: 600;">曲红绡</div>
-                                        <div style="color: #d7bde2; font-size: 0.9rem;">邪修·血罗刹</div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }, 1500);
-                });
-            }
-            
             // 添加滚动动画效果
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
