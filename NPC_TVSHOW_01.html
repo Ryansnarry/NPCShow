@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>曲红绡NPC效果验证方案</title>
+    <title>曲红绡NPC效果验证方案 - 交互式分镜</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -274,6 +274,69 @@
             height: 4px;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
         }
+        
+        /* 图标导航栏 */
+        .icon-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 15px;
+            background: rgba(201, 182, 216, 0.15);
+            border-radius: 12px;
+            border: 1px solid rgba(138, 109, 158, 0.2);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 10px;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-item:hover {
+            background: rgba(156, 109, 181, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .nav-item.active {
+            background: var(--accent);
+        }
+        
+        .nav-item.active .nav-icon {
+            color: white;
+            background: var(--darker);
+        }
+        
+        .nav-item.active .nav-label {
+            color: var(--darker);
+            font-weight: 600;
+        }
+        
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-label {
+            color: var(--dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
 
         .script-section {
             margin-bottom: 30px;
@@ -534,6 +597,102 @@
             }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .scene {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 15px;
+        }
+        
+        .scene-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .scene-icon {
+            background: var(--accent);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .shot {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(201, 182, 216, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .shot-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .shot-number {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .shot-time {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .shot-detail {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .shot-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .shot-value {
+            color: var(--dark);
+        }
+        
+        .dialogue-content {
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent2);
+        }
+        
+        .dialogue-character {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .dialogue-text {
+            color: var(--dark);
+            margin: 5px 0;
+        }
+        
+        .dialogue-action {
+            font-style: italic;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
@@ -569,6 +728,26 @@
             .ai-features {
                 grid-template-columns: 1fr;
             }
+            
+            .shot-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .icon-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-item {
+                flex-direction: row;
+                justify-content: flex-start;
+                text-align: left;
+                gap: 15px;
+            }
+            
+            .nav-icon {
+                margin-bottom: 0;
+            }
         }
         
         /* 新增动画效果 */
@@ -595,6 +774,10 @@
         
         .delay-5 {
             animation-delay: 1.1s;
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
         }
         
         /* 装饰元素 */
@@ -648,16 +831,16 @@
             
             <div class="designer-info">
                 <div class="designer-card">
-                    <i class="fas fa-user-astronaut"></i>
-                    <span>策划：郭慧杰（Sevy）</span>
+                    <i class="fas fa-user"></i>
+                    <span>角色设计：郭慧杰（Sevy）</span>
                 </div>
                 <div class="designer-card">
-                    <i class="fas fa-calendar-star"></i>
-                    <span>版本：血影1.0</span>
+                    <i class="fas fa-calendar"></i>
+                    <span>2025年6月24日</span>
                 </div>
                 <div class="designer-card">
-                    <i class="fas fa-hourglass-half"></i>
-                    <span>时长：60秒</span>
+                    <i class="fas fa-film"></i>
+                    <span>交互式分镜版</span>
                 </div>
             </div>
         </section>
@@ -679,10 +862,10 @@
                 <div class="video-description">
                     <p>本视频将展示再见阶段的核心互动场景：玩家调查尸体时，曲红绡突然出现并用骨剑抵住玩家脖颈，通过危险调笑建立紧张氛围，随后化解误会并抛出合作邀请。</p>
                     <ul>
-                        <li>簌簌光影下的角色登场</li>
+                        <li>血月光影下的角色登场</li>
                         <li>骨剑抵颈的压迫感与性感特写</li>
-                        <li>真心思索时的微表情变化</li>
-                        <li>合作邀约时的语气变换</li>
+                        <li>仇恨台词时的面部微表情变化</li>
+                        <li>亲密距离时的语气变换</li>
                         <li>噬灵体探究时的氛围转变</li>
                     </ul>
                 </div>
@@ -699,6 +882,7 @@
                         <li>展示危险与性感并存的核心特质</li>
                         <li>测试AI动态表演的流畅度和情感表达</li>
                         <li>验证剧情转折的情感冲击力</li>
+                        <li>评估玩家在紧张情境下的情感反应</li>
                     </ul>
                     
                     <div style="margin-top: 25px; padding: 20px; border-radius: 10px; background: rgba(156, 109, 181, 0.05); border: 1px solid rgba(138, 109, 158, 0.2);">
@@ -712,116 +896,436 @@
             </div>
         </section>
 
-        <!-- 分镜脚本 -->
+        <!-- 分镜脚本 - 交互式导航 -->
         <section class="script-container fade-in delay-3">
             <h2 class="section-title">
                 <i class="fas fa-film"></i>
-                分镜脚本·月下叙事
+                分镜脚本·月下叙事（交互式）
             </h2>
             
-            <div class="script-section">
-                <div class="script-header">
-                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
-                    <h3 class="script-title">场景1：血月尸影 (0-15秒)</h3>
+            <!-- 图标导航栏 -->
+            <div class="icon-nav" id="sceneNav">
+                <div class="nav-item active" data-target="scene1">
+                    <div class="nav-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="nav-label">血月尸影</div>
                 </div>
-                <div class="script-content">
-                    <div class="action">【血月当空，宗内荒地，簌簌鸦声笼罩】玩家蹲在三具面目全非的尸体旁调查</div>
-                    <div class="action">镜头特写：尸体旁的血色丝绢飘动，骨粉痕迹散发微光</div>
-                    <div class="action">环境音效：低频震动音效 + 诡异风声</div>
-                    <div class="action">光影效果：血月红光与地面蓝光形成冷暖对比</div>
+                <div class="nav-item" data-target="scene2">
+                    <div class="nav-icon">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <div class="nav-label">骨剑迤逦</div>
+                </div>
+                <div class="nav-item" data-target="scene3">
+                    <div class="nav-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="nav-label">戏谑之间</div>
+                </div>
+                <div class="nav-item" data-target="scene4">
+                    <div class="nav-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="nav-label">秘卷邀约</div>
+                </div>
+                <div class="nav-item" data-target="scene5">
+                    <div class="nav-icon">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="nav-label">试探真言</div>
                 </div>
             </div>
             
-            <div class="script-section">
-                <div class="script-header">
-                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
-                    <h3 class="script-title">场景2：骨剑迤逦 (15-25秒)</h3>
-                </div>
-                <div class="script-content">
-                    <div class="action">【突然，勾引的光效闪现，骨剑抵住玩家脖颈】曲红绡从暗中浮现</div>
-                    <div class="dialogue">
-                        <div class="character">曲红绡</div>
-                        <div>"小弟弟，深夜探案，不怕被灭口吗？"</div>
+            <div class="scene" id="scene1">
+                <div class="scene-title">
+                    <div class="scene-icon">
+                        <i class="fas fa-moon"></i>
                     </div>
-                    <div class="action">镜头特写：红唇微勾，霓虹光线在面部流动，眼神狡黠危险</div>
-                    <div class="action">动作细节：骨剑边缘散发光效，有血色流转</div>
+                    <span>[00:00-00:10] 场景1：血月尸影 (10秒)</span>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头1 (0-3秒)</div>
+                        <div class="shot-time">时长：3秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">全景</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">血月当空，枯树鸦群，三具面目全非的尸体随意瘫落在路边</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">俯拍缓降，伴随乌鸦惊飞</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">低频震动音效+乌鸦振翅声</div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头2 (3-6秒)</div>
+                        <div class="shot-time">时长：3秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写→中景</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">玩家已走进，手指触碰丝绢瞬间，骨粉痕迹突然发光</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">推镜头至骨粉微光，快速拉远展现玩家警觉起身</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">诡异风铃音效+急促呼吸声</div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头3 (6-10秒)</div>
+                        <div class="shot-time">时长：4秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">中景</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">玩家拔剑环顾，衣摆被阴风吹动</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">手持晃动镜头，360度环绕拍摄</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">剑刃出鞘声+渐强的心跳声</div>
+                    </div>
                 </div>
             </div>
             
-            <div class="script-section">
-                <div class="script-header">
-                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
-                    <h3 class="script-title">场景3：戏谑之间 (25-40秒)</h3>
+            <div class="scene" id="scene2">
+                <div class="scene-title">
+                    <div class="scene-icon">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <span>[00:10-00:19] 场景2：骨剑迤逦 (9秒)</span>
                 </div>
-                <div class="script-content">
-                    <div class="dialogue">
-                        <div class="character">玩家</div>
-                        <div>"这些人死状，和你有关。"</div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头4 (10-12秒)</div>
+                        <div class="shot-time">时长：2秒</div>
                     </div>
-                    <div class="action">曲红绡轻笑收回骨剑，优雅逗弄地从怀中取出令牌</div>
-                    <div class="dialogue">
-                        <div class="character">曲红绡</div>
-                        <div>"算你聪明，看到这令牌了吗？元洪长老争抢的【噬灵体秘术】残卷，就在我手里——正道长老又如何？长生路上哪有无辜……"</div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">骨剑尖端悄然抵住玩家喉结，剑身流转血色光纹</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">剑尖从画面外快速刺入定格，剑尖触动喉结，镜头特写，喉结轻颤</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">一点点闷闷的破空声</div>
                     </div>
-                    <div class="action">微表情变化：提到元洪长老时嘴角露出不屑的弧度，保持轻笑</div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头5 (12-14秒)</div>
+                        <div class="shot-time">时长：2秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">中景</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">曲红绡从黑影中现身，红裙飘动，头发随风韵律</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">环绕镜头展现全身造型</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">衣物摩擦声+轻笑气息</div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头6 (14-16秒)</div>
+                        <div class="shot-time">时长：2秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">大特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">红唇弯起危险弧度，睫毛投下阴影</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">镜头推进至眼部特写</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">环境音突然静默</div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头7 (16-19秒)</div>
+                        <div class="shot-time">时长：3秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">双人特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">剑刃反光映在玩家瞳孔，瞳孔颤动</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">分屏对比两人表情</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">剑刃嗡鸣声+锦帕落地夸张的音效</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">曲红绡：</div>
+                            <div class="dialogue-text">"小弟弟，猜猜他们怎么死的？"</div>
+                            <div class="dialogue-action">(骨剑轻轻划过皮肤)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="script-section">
-                <div class="script-header">
-                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
-                    <h3 class="script-title">场景4：秘卷邀约 (40-55秒)</h3>
-                </div>
-                <div class="script-content">
-                    <div class="action">曲红绡把玩令牌，眼神深思片刻</div>
-                    <div class="dialogue">
-                        <div class="character">曲红绡</div>
-                        <div>"只要你帮我打探到镇门功法《水芸心经》的线索，《水芸心经》就有你一份。"</div>
-                        <div>"放心，我不杀你，如何？"</div>
+            <div class="scene" id="scene3">
+                <div class="scene-title">
+                    <div class="scene-icon">
+                        <i class="fas fa-comments"></i>
                     </div>
-                    <div class="action">镜头特写：眼神中流光闪烁，展现精明的交易意图</div>
+                    <span>[00:19-00:34] 场景3：戏谑之间 (15秒)</span>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头8 (19-21秒)</div>
+                        <div class="shot-time">时长：2秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">玩家手指突然弹开剑刃</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">慢动作捕捉手指动作</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">"叮"的金属撞击声</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">玩家：</div>
+                            <div class="dialogue-text">"杀人者，从不会炫耀凶器"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头9 (21-24秒)</div>
+                        <div class="shot-time">时长：3秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">中景</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">曲红绡挑眉后退半步，骨剑化作令牌在指尖旋转</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">曲红绡：</div>
+                            <div class="dialogue-text">"算你聪明"</div>
+                        </div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">镜头跟随令牌运动轨迹</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">令牌旋转的呼啸声</div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头10 (24-26秒)</div>
+                        <div class="shot-time">时长：2秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">令牌特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">"噬灵体"字样边缘沾有鲜血</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">镜头旋转90度</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">液体滴落声</div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头11 (26-34秒)</div>
+                        <div class="shot-time">时长：8秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写→全景</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">说至"屠我全族"时眼中血光暴现，最后抛接令牌</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">疾推镜头+环绕运镜</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">仇恨台词加重混响+令牌破风声</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">曲红绡：</div>
+                            <div class="dialogue-text">"元洪老道为这残卷...屠戮多人"</div>
+                            <div class="dialogue-action">(冷笑)</div>
+                            <div class="dialogue-text">"你说谁是凶手？"</div>
+                            <div class="dialogue-text">"帮我拿《水芸心经》，这残卷归你"</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="script-section">
-                <div class="script-header">
-                    <i class="fas fa-camera-movie" style="color: var(--accent);"></i>
-                    <h3 class="script-title">场景5：试探真言 (55-60秒)</h3>
+            <div class="scene" id="scene4">
+                <div class="scene-title">
+                    <div class="scene-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <span>[00:34-00:49] 场景4：秘卷邀约 (15秒)</span>
                 </div>
-                <div class="script-content">
-                    <div class="dialogue">
-                        <div class="character">玩家</div>
-                        <div>"噬灵体？"</div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头12 (34-36秒)</div>
+                        <div class="shot-time">时长：2秒</div>
                     </div>
-                    <div class="action">曲红绡眼神瞬间收缩，随后转为玩味，突然贴近玩家耳边</div>
-                    <div class="dialogue">
-                        <div class="character">曲红绡</div>
-                        <div>"知道太多，可是会被灭口的哦～不过……(压低声音)你以为这功法残卷是怎么来的？那些老东西杀人的时候，可比我狠多了。"</div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">玩家凝视令牌，倒影中浮现元洪长老虚像</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">镜头穿过令牌表面</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">幻听中有一声叹息</div>
                     </div>
-                    <div class="action">结尾定格：面部光影分裂为红蓝两色，展现矛盾情感</div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头13 (36-42秒)</div>
+                        <div class="shot-time">时长：6秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">双人特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">鼻尖相距寸许，呼吸交织</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">呼吸起伏同步手持晃动</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">呼吸声放大+衣料摩擦声</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">曲红绡：</div>
+                            <div class="dialogue-text">"害怕了？"</div>
+                            <div class="dialogue-action">(突然贴近)</div>
+                            <div class="dialogue-text">"还是说..."</div>
+                            <div class="dialogue-text">"你也想尝尝被追杀的滋味？"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头14 (42-49秒)</div>
+                        <div class="shot-time">时长：7秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">大特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">曲红绡瞳孔收缩→玩味眯眼</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">旋转镜头围绕面部</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">心跳骤停声→轻笑声</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">玩家：</div>
+                            <div class="dialogue-text">"人不是你杀的，我也不是"</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"><i class="fas fa-search"></i></div>
-                    <div class="timeline-label">血月尸影</div>
+            <div class="scene" id="scene5">
+                <div class="scene-title">
+                    <div class="scene-icon">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <span>[00:49-01:00] 场景5：试探真言 (11秒)</span>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"><i class="fas fa-skull"></i></div>
-                    <div class="timeline-label">骨剑迤逦</div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头15 (49-50秒)</div>
+                        <div class="shot-time">时长：1秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">令牌随手扔向玩家</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">镜头震动</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">闷响</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">玩家：</div>
+                            <div class="dialogue-text">"噬灵体是什么？"</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"><i class="fas fa-comments"></i></div>
-                    <div class="timeline-label">戏谑之间</div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头16 (50-51秒)</div>
+                        <div class="shot-time">时长：1秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">大特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">曲红绡眼光流转，渐渐陷入阴影中，有阴阳脸</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">镜头疾推</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">刀剑出鞘声</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"><i class="fas fa-handshake"></i></div>
-                    <div class="timeline-label">秘卷邀约</div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头17 (51-52秒)</div>
+                        <div class="shot-time">时长：1秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">骨剑再现却停在玩家颈侧</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">剑刃颤抖的特写</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">剑鸣震颤声</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"><i class="fas fa-dragon"></i></div>
-                    <div class="timeline-label">试探真言</div>
+                
+                <div class="shot">
+                    <div class="shot-header">
+                        <div class="shot-number">镜头18 (52-60秒)</div>
+                        <div class="shot-time">时长：8秒</div>
+                    </div>
+                    <div class="shot-detail">
+                        <div class="shot-label">景别：</div>
+                        <div class="shot-value">全景→特写</div>
+                        <div class="shot-label">画面：</div>
+                        <div class="shot-value">血雾爆开，唯留飘落的丝绢盖住玩家眼睛</div>
+                        <div class="shot-label">运镜：</div>
+                        <div class="shot-value">高速后退镜头</div>
+                        <div class="shot-label">音效：</div>
+                        <div class="shot-value">空间扭曲声+丝绢飘落声</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-character">曲红绡：</div>
+                            <div class="dialogue-text">(耳语) "下次多嘴时..."</div>
+                            <div class="dialogue-text">"记得选个没尸体的地方~"</div>
+                            <div class="dialogue-action">(突然推远玩家消失)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -903,6 +1407,79 @@
             document.querySelectorAll('.fade-in').forEach(el => {
                 observer.observe(el);
             });
+            
+            // 场景导航交互
+            const navItems = document.querySelectorAll('.nav-item');
+            const scenes = document.querySelectorAll('.scene');
+            
+            // 初始高亮第一个场景
+            highlightScene('scene1');
+            
+            // 点击导航项
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // 移除所有active类
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // 添加当前active类
+                    this.classList.add('active');
+                    
+                    // 高亮对应场景
+                    highlightScene(target);
+                    
+                    // 滚动到对应场景
+                    document.getElementById(target).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+            
+            // 场景滚动检测
+            const sceneObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sceneId = entry.target.id;
+                        
+                        // 更新导航状态
+                        navItems.forEach(nav => {
+                            nav.classList.remove('active');
+                            if (nav.getAttribute('data-target') === sceneId) {
+                                nav.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            // 观察所有场景
+            scenes.forEach(scene => {
+                sceneObserver.observe(scene);
+            });
+            
+            // 高亮场景函数
+            function highlightScene(sceneId) {
+                // 移除所有高亮
+                scenes.forEach(scene => {
+                    scene.style.border = 'none';
+                    scene.style.boxShadow = 'none';
+                });
+                
+                // 高亮当前场景
+                const currentScene = document.getElementById(sceneId);
+                if (currentScene) {
+                    currentScene.style.border = '2px solid ' + getComputedStyle(document.documentElement).getPropertyValue('--accent');
+                    currentScene.style.boxShadow = '0 0 15px rgba(156, 109, 181, 0.3)';
+                    
+                    // 5秒后移除高亮
+                    setTimeout(() => {
+                        currentScene.style.border = 'none';
+                        currentScene.style.boxShadow = 'none';
+                    }, 5000);
+                }
+            }
         });
     </script>
 </body>
